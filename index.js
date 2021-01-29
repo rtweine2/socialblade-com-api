@@ -26,7 +26,7 @@ async function socialblade (urlPrefix, source, username) {
     const html = await callSocialblade(url)
     const { table, charts } = getOutput(html.data, source)
     const { tableRows, chartsRows } = cleanRows(table, charts)
-    const itemsPerRow = { twitter: 7, instagram: 7, facebook: 5, youtube: 6 }
+    const itemsPerRow = { twitter: 7, instagram: 7, facebook: 5, youtube: 6, tiktok: 9 }
     let tableArrays = createArrayOfArrays(tableRows.length / itemsPerRow[source])
     tableArrays = fillArray(tableArrays, tableRows, itemsPerRow[source])
     const tableArrayOfObjects = convertArrayToObject(source, tableArrays)

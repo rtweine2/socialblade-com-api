@@ -1,7 +1,7 @@
 
 const cheerio = require('cheerio')
 
-const validSources = ['twitter', 'instagram', 'facebook', 'youtube']
+const validSources = ['twitter', 'instagram', 'facebook', 'youtube', 'tiktok']
 
 function isValidSource (source) {
   return validSources.includes(source)
@@ -64,7 +64,7 @@ function fillArray (arrays, tableRows, itemsPerRow) {
 
 function convertArrayToObject (source, arrays) {
   return arrays.map(array => {
-    const [col1, col2, col3, col4, col5, col6, col7] = array
+    const [col1, col2, col3, col4, col5, col6, col7, col8, col9] = array
     let parsed
     switch (source) {
       case 'twitter':
@@ -94,8 +94,19 @@ function convertArrayToObject (source, arrays) {
           viewsDelta: +col4 || 0,
           views: +col5 || 0
         }
+      case 'tiktok':
+        return {
+          date: getDate(col1),
+          followersDelta: +col2 || 0,
+          followers: +col3 || 0,
+          followingDelta: +col4 || 0,
+          following: +col5 || 0,
+          likesDelta: +col6 || 0,
+          likes: +col7 || 0,
+          uploadsDelta: +col8 || 0,
+          uploads: +col9 || 0
+        }
       case 'charts':
-      default:
         parsed = JSON.parse(col2)
         // [[Timestamp, Number], [...], ...]
         parsed = parsed.map(item => ({ date: getDate(item[0]), value: item[1] }))
